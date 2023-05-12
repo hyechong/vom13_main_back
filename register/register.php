@@ -20,10 +20,44 @@
     }
     
     // id 중복 확인 함수
-    public function check_id(){}
+    public function check_id(){
+      $sql = "SELECT * FROM ".$this->table." WHERE user_id=:id";
+      $stmt = $this->conn->prepare($sql);
+
+      $this->id = htmlspecialchars($this->id);
+      $stmt->bindParam(":id", $this->id);
+      $stmt->execute();
+
+      return $stmt->rowCount() ? true : false;
+    }
 
     // 회원정보 입력 함수
-    public function insert_user(){}
+    public function insert_user(){
+      // 참고 : https://wickedmagica.tistory.com/16
+      $sql = "INSERT INTO ".$this->table." SET user_id=:id, user_name=:name, user_email=:email, user_pwd=:pwd, user_lvl=:lvl";
+      $stmt = $this->conn->prepare($sql);
+
+      $this->id     = htmlspecialchars($this->id);
+      $this->name   = htmlspecialchars($this->name);
+      $this->email  = htmlspecialchars($this->email);
+      // 비밀번호 암호화 : https://www.codingfactory.net/11707
+      $this->pwd    = htmlspecialchars($this->pwd);
+      $this->pwd    = password_hash ( $this->pwd , PASSWORD_DEFAULT );
+      $this->lvl    = 9;
+
+      $stmt->bindParam(":id",     $this->id);
+      $stmt->bindParam(":name",   $this->name);
+      $stmt->bindParam(":email",  $this->email);
+      $stmt->bindParam(":pwd",    $this->pwd);
+      $stmt->bindParam(":lvl",    $this->lvl);
+
+      return $stmt->execute() ? true : false;
+      // if($stmt->execute()){
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+    }
 
     // 로그인 함수
     public function login(){}
