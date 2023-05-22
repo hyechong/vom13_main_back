@@ -28,34 +28,38 @@
         $lvl = 1;
       }
 
-      if($token == '' || $lvl == 0){
+      if($token == '' && $lvl == 0){
         return false;
       } else {
         $sql = "SELECT * FROM ". $this->table ." WHERE user_lvl=:lvl AND user_token=:token";
         $stmt = $this->conn->prepare($sql);
 
-        $this->lvl   = $lvl;
-        $this->token = $token;
+        $this->lvl = htmlspecialchars(strip_tags($lvl));
+        $this->token = htmlspecialchars(strip_tags($token));
 
-        $stmt->bindParam(":lvl",     $this->lvl);
-        $stmt->bindParam(":token",   $this->token);
+        // echo $this->token;
+        // echo '------';
+        // echo $this->lvl;
+        // exit;
 
-        echo $stmt->rowCount();
+        $stmt->bindParam(":lvl", $this->lvl);
+        $stmt->bindParam(":token", $this->token);
+        $stmt->execute();
 
+        // print_r($stmt->execute());
+        $num = $stmt->rowCount();
 
-        // if(!$stmt->execute()){
-        //   echo '권한 없음';
-        // } else {
-        //   echo '권한 있음';
-        // };
+        if($num == ''){
+          return false;
+        } else {
+          $sql1 = "SELECT * FROM ". $this->table ." WHERE user_lvl != 1 ORDER BY user_idx DESC"; 
+          $stmt1 = $this->conn->prepare($sql1);
+          $stmt1->execute();
+
+          return $stmt1;
+        }
       }
-      // $sql = "SELECT * FROM ". $this->table ." WHERE user_lvl != 1 ORDER BY user_idx DESC";
-      // $stmt = $this->conn->prepare($sql);
-      // $stmt->execute();
-
-      // return $stmt;
     }
-
   }
 
 ?>
