@@ -18,9 +18,9 @@
   $delete_user->idx = $delete_idx;
   
   if($delete_user->delete_user()){
-    $msg = ['삭제가 완료되었습니다.'];
+    $msg = ['msg'=>'삭제가 완료되었습니다.'];
   } else {
-    $msg = ['삭제에 실패했습니다.'];
+    $msg = ['msg'=>'삭제에 실패했습니다.'];
   }
 
   echo json_encode($msg);
