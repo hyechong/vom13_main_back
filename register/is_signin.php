@@ -11,6 +11,12 @@ if(isset($_SESSION['userid'])){
   $userlvl = -1;
 }
 
-echo json_encode(array("userid" => $userid, "useridx" => $useridx, "userlvl" => $userlvl));
+if($_SESSION['cart']){
+  $cart_count = count($_SESSION['cart']);
+} else {
+  $cart_count = 0;
+}
+
+echo json_encode(array("userid" => $userid, "useridx" => $useridx, "userlvl" => $userlvl, "cartcount" => $cart_count));
 
 ?>

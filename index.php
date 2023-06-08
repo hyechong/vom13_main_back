@@ -13,9 +13,9 @@
 
   $inc_path = ['register', 'admin', 'product', 'cart'];
   $inc_adrs_post = ['signup', 'signin', 'is_signin', 'insert_product', 'add_cart']; // post로 전달되는 주소
-  $inc_adrs_get  = ['signout', 'check_admin_signin', 'get_users', 'get_products']; // get으로 전달되는 주소 (데이터 보낼일 없는애들)
+  $inc_adrs_get  = ['signout', 'check_admin_signin', 'get_users', 'get_products', 'get_cart']; // get으로 전달되는 주소 (데이터 보낼일 없는애들)
   $inc_adrs_put = ['update_user'];
-  $inc_adrs_delete = ['delete_user'];
+  $inc_adrs_delete = ['delete_user', 'del_cart'];
 
   // POST path
   foreach($inc_path as $path){
