@@ -2,7 +2,7 @@
 
   class Product{
     private $conn;
-    private $table = '';
+    private $table;
 
     public $pr_img;  
     public $pr_ttl;  
